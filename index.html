@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio Vue 6</title>
+    <style>
+        body {
+            background-color: paleturquoise;
+        }
+        #app {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 90%;
+            margin: auto;
+            position: relative;
+        }
+        img, h1, h3, button {
+            position: absolute;
+        }
+        img {
+            top: 10%;
+            width: 80px;
+        }
+        h1 {
+            top: 50%;
+        }
+       h3 {
+           top: 75%;
+       }
+        h1, h3, button {
+            font-family: sans-serif;
+            margin-bottom: 2%;  
+        }
+        h1, h3{
+            text-align: center;
+        }
+        button {
+            background-color: orange;
+            width: 120px;
+            height: 55px;
+            border: 5px solid;
+            border-radius: 10px;
+            font-weight: 900;
+            margin-top: 2%;
+            top: 58%;
+            cursor: pointer;
+        }
+        input[type="submit"] {
+          
+            margin: auto;
+
+        }
+        @media only screen and (max-width: 400px) {
+            h1 {
+                top: 45%;
+            }
+            h3 {
+                top: 80%;
+            }
+            img {
+                top: 10%;
+            }
+            button {
+                top: 65%;
+            }
+        }
+        @media only screen and (max-width: 768px) {
+            img {
+                width: 200px;
+            }
+        }
+        @media only screen and (min-width: 768px) {
+            img {
+                width: 300px;
+            }
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <div>Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+        <img v-if="message" src="fortune-cookie.svg" alt="">
+        <img v-else src="fortune-cookie-closed.svg" alt="">
+        <h1>Your fortune cookie of the day</h1>
+        <button type="submit" value="Know now" v-on:click="getMessage">Know Now</button>
+        <h3 v-if="message">{{ message }}</h3>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+              message: ""
+            },
+            methods: {
+                getMessage() {
+                    axios.get('https://api.adviceslip.com/advice')
+                    .then(response => this.message = response.data.slip.advice)
+                    .catch(error => console.error(error));
+
+                }
+            }           
+        })
+        
+    </script>
+</body>
+</html>
